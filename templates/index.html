@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+.banner {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(120deg, #00aaff, #0066ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.job-listings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 10px 40px;
+}
+
+.job-posting {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    border-top: 4px solid #007bff;
+}
+
+.job-posting:hover {
+    transform: translateY(-6px);
+}
+
+.job-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.job-details p {
+    margin: 6px 0;
+    color: #444;
+}
+
+/* Guest Image */
+.guest-image {
+    width: 80%;
+    max-width: 650px;
+    display: block;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+</style>
+
+{% if user.is_authenticated %}
+
+<div class="banner">
+    Recommended Jobs For You
+</div>
+
+<div class="job-listings">
+    {% for job_posting in job_postings %}
+        <div class="job-posting">
+            <h2 class="job-title">{{ job_posting.title }}</h2>
+            <div class="job-details">
+                <p><strong>Location:</strong> {{ job_posting.location }}</p>
+                <p><strong>Description:</strong> {{ job_posting.description }}</p>
+                <p><strong>Salary:</strong> {{ job_posting.salary }}</p>
+                <p><strong>Job Type:</strong> {{ job_posting.job_type }}</p>
+                <p><strong>Interview Date:</strong> {{ job_posting.Interview_date }}</p>
+                <p><strong>Skills Required:</strong> {{ job_posting.skills_required }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% else %}
+
+<div class="banner">
+    Welcome to Job Board Marketplace
+</div>
+
+<img class="guest-image" src="{% static '15-Job-Board-Alternatives-to-Indeed.png' %}" alt="Job Board Banner">
+
+{% endif %}
+{% endblock %}

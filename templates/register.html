@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.register-card {
+    width: 430px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    animation: popIn 0.6s ease;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* NEW ROLE FIX  */
+.role-container {
+    margin-bottom: 20px;
+}
+
+.role-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #0066ff;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0047b3;
+}
+
+@keyframes popIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+}
+.role-option {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: start !important;
+    gap: 10px !important;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.role-option span {
+    display: inline-block !important;
+    white-space: nowrap !important;
+}
+
+.role-container {
+    margin-bottom: 20px;
+}
+
+
+</style>
+
+<div class="register-card">
+    <h2>Create Account</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password1" required>
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+            <input type="password" name="password2" required>
+        </div>
+
+        <!-- FIXED ROLE SECTION -->
+        <div class="role-container">
+    <label style="font-weight:500;">Select Role</label>
+
+    <div class="role-option">
+        <input type="radio" name="role" value="job_seeker" checked>
+        <span>Job Seeker</span>
+    </div>
+
+    <div class="role-option">
+        <input type="radio" name="role" value="employer">
+        <span>Employer</span>
+    </div>
+</div>
+
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p style="text-align:center; margin-top:15px;">
+        Already have an account?
+        <a href="{% url 'login' %}">Login here</a>
+    </p>
+</div>
+
+{% endblock %}

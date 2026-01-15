@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.resume-view-container {
+    width: 90%;
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 0.7s ease;
+}
+
+.resume-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.resume-text {
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #444;
+}
+
+.no-resume {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.create-btn {
+    display: block;
+    text-align: center;
+    width: 220px;
+    margin: 15px auto;
+    padding: 12px;
+    background: #0066ff;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.create-btn:hover {
+    background: #004fc3;
+}
+
+.pdf-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: #00aa55;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.pdf-btn:hover {
+    background: #008944;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+</style>
+
+
+<div class="resume-view-container">
+
+    <h2 class="resume-title">📄 Your Resume</h2>
+
+    {% if resume %}
+
+        <div class="resume-section">
+            <h3 class="section-title">💡 Skills</h3>
+            <p class="resume-text">{{ resume.skills }}</p>
+        </div>
+
+        <div class="resume-section">
+            <h3 class="section-title">🧑‍💼 Experience</h3>
+            <p class="resume-text">{{ resume.experience }}</p>
+        </div>
+
+        {% if resume.resume_file %}
+            <div class="resume-section">
+                <h3 class="section-title">📎 Resume File</h3>
+                <a href="{{ resume.resume_file.url }}" target="_blank" class="pdf-btn">📄 View PDF</a>
+            </div>
+        {% endif %}
+
+    {% else %}
+
+        <p class="no-resume">⚠️ You don’t have a resume uploaded yet.</p>
+
+        <a href="{% url 'manage_resume' %}" class="create-btn">
+            ➕ Create Resume
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+/* --- Main Card --- */
+.job-form-container {
+    width: 90%;
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 0.7s ease;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* --- Form Layout --- */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #222;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #bbb;
+    background: #f7f7f7;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    background: #fff;
+    border-color: #0066ff;
+}
+
+/* Textarea Fix */
+textarea {
+    resize: none;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 5px;
+    background: #0066ff;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.submit-btn:hover {
+    background: #004ec4;
+    transform: translateY(-3px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+</style>
+
+
+
+<div class="job-form-container">
+
+    <h2 class="form-title">📝 Post a Job</h2>
+
+    <form method="POST" action="{% url 'job_posting_form' %}">
+        {% csrf_token %}
+
+        <!-- Row 1 -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="title">Job Title</label>
+                <input type="text" name="title" id="title" placeholder="e.g. Software Engineer" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Job Location</label>
+                <input type="text" name="location" id="location" placeholder="City, Country" required>
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="description">Job Description</label>
+                <textarea name="description" id="description" rows="4" placeholder="Write the job details..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="number" name="salary" id="salary" placeholder="e.g. 40000" required>
+            </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="job_type">Job Type</label>
+                <select name="job_type" id="job_type" required>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Freelance">Freelance</option>
+                    <option value="Internship">Internship</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="skills_required">Skills Required</label>
+                <textarea name="skills_required" id="skills_required" rows="3" placeholder="e.g. Python, Leadership" required></textarea>
+            </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="date">Interview Date</label>
+                <input name="Interview" type="date" required>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Post Job</button>
+    </form>
+
+    <p style="text-align:center; margin-top:15px;">
+        ⬅️ <a href="{% url 'home' %}" style="color:#0066ff; font-weight:600;">Back to Home</a>
+    </p>
+
+</div>
+
+{% endblock %}
